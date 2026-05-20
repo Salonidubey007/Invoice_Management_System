@@ -1,0 +1,140 @@
+@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Create Invoice";
+}
+
+<div class="py-4">
+    <div class="row">
+        <div class="col-lg-9 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-file-invoice fa-2x text-white me-3"></i>
+                        <div>
+                            <h2 class="mb-0">Create New Invoice</h2>
+                            <p class="text-white-50 mb-0 small">Fill in the details below to create a new invoice</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-5">
+                    <form method="post" novalidate class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Please fix the following errors:</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- First Row -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Invoice.InvoiceNumber" class="form-label">
+                                    <i class="fas fa-barcode me-2 text-primary"></i>Invoice Number
+                                </label>
+                                <input asp-for="Invoice.InvoiceNumber" class="form-control form-control-lg" placeholder="e.g., INV-001" required />
+                                <span asp-validation-for="Invoice.InvoiceNumber" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Invoice.VendorName" class="form-label">
+                                    <i class="fas fa-building me-2 text-primary"></i>Vendor Name
+                                </label>
+                                <input asp-for="Invoice.VendorName" class="form-control form-control-lg" placeholder="Vendor or supplier name" required />
+                                <span asp-validation-for="Invoice.VendorName" class="text-danger small d-block mt-2"></span>
+                            </div>
+                        </div>
+
+                        <!-- Second Row -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Invoice.Amount" class="form-label">
+                                    <i class="fas fa-dollar-sign me-2 text-success"></i>Amount
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-white fw-bold text-success">$</span>
+                                    <input asp-for="Invoice.Amount" class="form-control" placeholder="0.00" type="number" step="0.01" min="0" required />
+                                </div>
+                                <span asp-validation-for="Invoice.Amount" class="text-danger small d-block mt-2"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Invoice.InvoiceDate" class="form-label">
+                                    <i class="fas fa-calendar me-2 text-info"></i>Invoice Date
+                                </label>
+                                <input asp-for="Invoice.InvoiceDate" class="form-control form-control-lg" type="date" min="1990-01-01" max="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                                <span asp-validation-for="Invoice.InvoiceDate" class="text-danger small d-block mt-2"></span>
+                            </div>
+                        </div>
+
+                        <!-- Third Row -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Invoice.PurchaseOrderNumber" class="form-label">
+                                    <i class="fas fa-receipt me-2 text-warning"></i>Purchase Order Number
+                                </label>
+                                <input asp-for="Invoice.PurchaseOrderNumber" class="form-control form-control-lg" placeholder="PO number (optional)" />
+                                <span asp-validation-for="Invoice.PurchaseOrderNumber" class="text-danger small d-block mt-2"></span>
+                                <small class="text-muted">Optional field - Add if available</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Invoice.Status" class="form-label">
+                                    <i class="fas fa-flag me-2 text-danger"></i>Status
+                                </label>
+                                <select asp-for="Invoice.Status" class="form-select form-select-lg" required>
+                                    <option value="">-- Select Status --</option>
+                                    <option value="New" selected>New</option>
+                                    <option value="Pending">Pending Review</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                                <span asp-validation-for="Invoice.Status" class="text-danger small d-block mt-2"></span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="row mt-5 pt-4 border-top">
+                            <div class="col-12 d-flex gap-3 justify-content-end">
+                                <a asp-page="/Invoices/Index" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="fas fa-save me-2"></i>Save Invoice
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="card mt-4 border-0 bg-light">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>Tips for Creating Invoices
+                    </h6>
+                    <ul class="mb-0 small text-muted">
+                        <li>Invoice Number should be unique and follow your numbering convention</li>
+                        <li>Amount should include all applicable taxes and charges</li>
+                        <li>Invoice Date is typically the date the invoice was issued</li>
+                        <li>You can always edit the invoice status later if needed</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.classList.add('was-validated');
+        });
+    </script>
+}

@@ -1,0 +1,21 @@
+@page
+@model ListModel
+
+<h2>Invoices</h2>
+
+<table>
+    <tr>
+        <th>Invoice Number</th>
+        <th>Vendor</th>
+        <th>Amount</th>
+    </tr>
+
+    @foreach (var item in Model.Invoices)
+    {
+        <tr>
+            <td>@item.InvoiceNumber</td>
+            <td>@item.VendorName</td>
+            <td>@item.Amount</td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,51 @@
+@page
+@model UploadModel
+@{
+    ViewData["Title"] = "Upload Invoices";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-white">
+                <h2 class="mb-0"><i class="bi bi-cloud-upload"></i> Upload Invoice PDF</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <label for="fileInput" class="form-label fw-semibold">Select PDF File</label>
+                        <div class="input-group input-group-lg">
+                            <input type="file" name="file" id="fileInput" class="form-control" accept=".pdf" required />
+                            <button type="submit" class="btn btn-info">
+                                <i class="bi bi-upload"></i> Upload
+                            </button>
+                        </div>
+                        <small class="text-muted d-block mt-2">Only PDF files are accepted. Maximum file size: 10 MB</small>
+                    </div>
+                </form>
+
+                @if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle"></i> @Model.Message
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Upload Instructions</h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Prepare your invoice PDF file</li>
+                    <li>Click "Choose File" to select your PDF</li>
+                    <li>Click "Upload" to process the file</li>
+                    <li>The invoice data will be extracted and added to your system</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
