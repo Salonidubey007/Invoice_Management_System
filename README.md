@@ -68,6 +68,34 @@ InvoiceProcessingWebApp/
 
 ---
 
+## Screenshots
+
+### Login
+![Login](Ui_images/Login%20page.png)
+
+### Register
+![Register](Ui_images/Sign_up%20page.png)
+
+### Dashboard
+![Dashboard](Ui_images/Dashboard%20page.png)
+
+### Invoice List
+![Invoices](Ui_images/Invoices%20page.png)
+
+### Create Invoice
+![Create Invoice](Ui_images/Create%20Invoice%20page.png)
+
+### Upload Invoice
+![Upload](Ui_images/UploadInvoice%20page.png)
+
+### Analytics
+![Analytics](Ui_images/Analytics%20Page.png)
+
+### AI Assistant
+![AI Assistant](Ui_images/AI%20Assistant.png)
+
+---
+
 ## Getting Started
 
 ### Prerequisites
