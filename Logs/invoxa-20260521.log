@@ -2505,3 +2505,516 @@ LIMIT @p1 OFFSET @p
 2026-05-21 13:02:19.124 +05:30 [INF] HTTP GET /Invoices/Analytics responded 200 in 111.8975 ms
 2026-05-21 13:02:19.128 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Analytics - 200 null text/html; charset=utf-8 131.3732ms
 2026-05-21 13:08:02.664 +05:30 [INF] Application is shutting down...
+2026-05-21 13:14:39.292 +05:30 [INF] Starting Invoxa application
+2026-05-21 13:14:41.444 +05:30 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-05-21 13:14:41.505 +05:30 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2026-05-21 13:14:41.533 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2026-05-21 07:44:41.5240148+00:00');
+SELECT changes();
+2026-05-21 13:14:41.713 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2026-05-21 13:14:41.728 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2026-05-21 13:14:41.736 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2026-05-21 13:14:41.755 +05:30 [INF] No migrations were applied. The database is already up to date.
+2026-05-21 13:14:41.796 +05:30 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2026-05-21 13:14:41.938 +05:30 [INF] User profile is available. Using 'C:\Users\saldubey\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-21 13:14:42.179 +05:30 [INF] Now listening on: http://localhost:5113
+2026-05-21 13:14:42.190 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-21 13:14:42.196 +05:30 [INF] Hosting environment: Development
+2026-05-21 13:14:42.201 +05:30 [INF] Content root path: C:\Users\saldubey\InvoiceProcessingWebApp
+2026-05-21 13:14:45.995 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/ - null null
+2026-05-21 13:14:46.232 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-05-21 13:14:46.468 +05:30 [INF] Executing endpoint '/Index'
+2026-05-21 13:14:46.525 +05:30 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2026-05-21 13:14:46.579 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2026-05-21 13:14:47.225 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:14:47.288 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:14:47.299 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Pending'
+2026-05-21 13:14:47.311 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Rejected'
+2026-05-21 13:14:47.335 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i")
+2026-05-21 13:14:47.370 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+2026-05-21 13:14:47.385 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i"
+    WHERE "i"."Status" = 'Approved')
+2026-05-21 13:14:47.397 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:14:47.517 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."AccessFailedCount", "a"."ConcurrencyStamp", "a"."Email", "a"."EmailConfirmed", "a"."LockoutEnabled", "a"."LockoutEnd", "a"."NormalizedEmail", "a"."NormalizedUserName", "a"."PasswordHash", "a"."PhoneNumber", "a"."PhoneNumberConfirmed", "a"."SecurityStamp", "a"."TwoFactorEnabled", "a"."UserName"
+FROM "AspNetUsers" AS "a"
+WHERE "a"."Id" = @p
+LIMIT 1
+2026-05-21 13:14:47.639 +05:30 [INF] Executed handler method OnGetAsync, returned result .
+2026-05-21 13:14:47.647 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:14:47.651 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:14:47.823 +05:30 [INF] Executed page /Index in 1276.3245ms
+2026-05-21 13:14:47.828 +05:30 [INF] Executed endpoint '/Index'
+2026-05-21 13:14:47.848 +05:30 [INF] HTTP GET / responded 200 in 1379.2633 ms
+2026-05-21 13:14:47.872 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/ - 200 null text/html; charset=utf-8 1883.1121ms
+2026-05-21 13:15:23.156 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Chat - null null
+2026-05-21 13:15:23.228 +05:30 [INF] Executing endpoint '/Chat'
+2026-05-21 13:15:23.272 +05:30 [INF] Route matched with {page = "/Chat"}. Executing page /Chat
+2026-05-21 13:15:23.278 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.ChatModel.OnGet - ModelState is "Valid"
+2026-05-21 13:15:23.282 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:15:23.286 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:15:23.289 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:15:23.316 +05:30 [INF] Executed page /Chat in 41.8518ms
+2026-05-21 13:15:23.322 +05:30 [INF] Executed endpoint '/Chat'
+2026-05-21 13:15:23.326 +05:30 [INF] HTTP GET /Chat responded 200 in 98.7459 ms
+2026-05-21 13:15:23.336 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Chat - 200 null text/html; charset=utf-8 180.0461ms
+2026-05-21 13:15:50.917 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Index?handler=Export - null null
+2026-05-21 13:15:50.993 +05:30 [INF] Executing endpoint '/Invoices/Index'
+2026-05-21 13:15:51.006 +05:30 [INF] Route matched with {page = "/Invoices/Index"}. Executing page /Invoices/Index
+2026-05-21 13:15:51.014 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.IndexModel.OnGetExport - ModelState is "Valid"
+2026-05-21 13:15:51.133 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "i"."Id", "i"."Amount", "i"."InvoiceDate", "i"."InvoiceNumber", "i"."PurchaseOrderNumber", "i"."Status", "i"."VendorName"
+FROM "Invoices" AS "i"
+ORDER BY "i"."InvoiceDate" DESC
+2026-05-21 13:15:51.180 +05:30 [INF] Executed handler method OnGetExport, returned result Microsoft.AspNetCore.Mvc.FileContentResult.
+2026-05-21 13:15:51.184 +05:30 [INF] Executing FileContentResult, sending file with download name 'invoices.csv' ...
+2026-05-21 13:15:51.230 +05:30 [INF] Executed page /Invoices/Index in 220.5706ms
+2026-05-21 13:15:51.236 +05:30 [INF] Executed endpoint '/Invoices/Index'
+2026-05-21 13:15:51.242 +05:30 [INF] HTTP GET /Invoices/Index responded 200 in 248.8303 ms
+2026-05-21 13:15:51.257 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Index?handler=Export - 200 106 text/csv 339.4281ms
+2026-05-21 13:15:54.608 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Upload - null null
+2026-05-21 13:15:54.616 +05:30 [INF] Executing endpoint '/Invoices/Upload'
+2026-05-21 13:15:54.640 +05:30 [INF] Route matched with {page = "/Invoices/Upload"}. Executing page /Invoices/Upload
+2026-05-21 13:15:54.645 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:15:54.648 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:15:54.679 +05:30 [INF] Executed page /Invoices/Upload in 35.2822ms
+2026-05-21 13:15:54.686 +05:30 [INF] Executed endpoint '/Invoices/Upload'
+2026-05-21 13:15:54.695 +05:30 [INF] HTTP GET /Invoices/Upload responded 200 in 78.5058 ms
+2026-05-21 13:15:54.701 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Upload - 200 null text/html; charset=utf-8 92.433ms
+2026-05-21 13:15:55.915 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Create - null null
+2026-05-21 13:15:55.969 +05:30 [INF] Executing endpoint '/Invoices/Create'
+2026-05-21 13:15:55.990 +05:30 [INF] Route matched with {page = "/Invoices/Create"}. Executing page /Invoices/Create
+2026-05-21 13:15:56.000 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.CreateModel.OnGet - ModelState is "Valid"
+2026-05-21 13:15:56.003 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:15:56.006 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:15:56.008 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:15:56.103 +05:30 [INF] Executed page /Invoices/Create in 110.165ms
+2026-05-21 13:15:56.107 +05:30 [INF] Executed endpoint '/Invoices/Create'
+2026-05-21 13:15:56.109 +05:30 [INF] HTTP GET /Invoices/Create responded 200 in 140.0349 ms
+2026-05-21 13:15:56.115 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Create - 200 null text/html; charset=utf-8 199.9055ms
+2026-05-21 13:15:57.457 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/ - null null
+2026-05-21 13:15:57.471 +05:30 [INF] Executing endpoint '/Index'
+2026-05-21 13:15:57.473 +05:30 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2026-05-21 13:15:57.478 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2026-05-21 13:15:57.490 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:15:57.498 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:15:57.504 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Pending'
+2026-05-21 13:15:57.509 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Rejected'
+2026-05-21 13:15:57.515 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i")
+2026-05-21 13:15:57.519 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+2026-05-21 13:15:57.527 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i"
+    WHERE "i"."Status" = 'Approved')
+2026-05-21 13:15:57.532 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:15:57.541 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."AccessFailedCount", "a"."ConcurrencyStamp", "a"."Email", "a"."EmailConfirmed", "a"."LockoutEnabled", "a"."LockoutEnd", "a"."NormalizedEmail", "a"."NormalizedUserName", "a"."PasswordHash", "a"."PhoneNumber", "a"."PhoneNumberConfirmed", "a"."SecurityStamp", "a"."TwoFactorEnabled", "a"."UserName"
+FROM "AspNetUsers" AS "a"
+WHERE "a"."Id" = @p
+LIMIT 1
+2026-05-21 13:15:57.547 +05:30 [INF] Executed handler method OnGetAsync, returned result .
+2026-05-21 13:15:57.549 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:15:57.551 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:15:57.558 +05:30 [INF] Executed page /Index in 81.041ms
+2026-05-21 13:15:57.563 +05:30 [INF] Executed endpoint '/Index'
+2026-05-21 13:15:57.565 +05:30 [INF] HTTP GET / responded 200 in 93.3820 ms
+2026-05-21 13:15:57.569 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/ - 200 null text/html; charset=utf-8 112.1693ms
+2026-05-21 13:19:02.263 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Chat - null null
+2026-05-21 13:19:02.316 +05:30 [INF] Executing endpoint '/Chat'
+2026-05-21 13:19:02.322 +05:30 [INF] Route matched with {page = "/Chat"}. Executing page /Chat
+2026-05-21 13:19:02.326 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.ChatModel.OnGet - ModelState is "Valid"
+2026-05-21 13:19:02.338 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:19:02.344 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:19:02.349 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:19:02.355 +05:30 [INF] Executed page /Chat in 29.126ms
+2026-05-21 13:19:02.363 +05:30 [INF] Executed endpoint '/Chat'
+2026-05-21 13:19:02.371 +05:30 [INF] HTTP GET /Chat responded 200 in 54.4760 ms
+2026-05-21 13:19:02.382 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Chat - 200 null text/html; charset=utf-8 119.6875ms
+2026-05-21 13:19:06.663 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Index - null null
+2026-05-21 13:19:06.674 +05:30 [INF] Executing endpoint '/Invoices/Index'
+2026-05-21 13:19:06.678 +05:30 [INF] Route matched with {page = "/Invoices/Index"}. Executing page /Invoices/Index
+2026-05-21 13:19:06.701 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.IndexModel.OnGet - ModelState is "Valid"
+2026-05-21 13:19:06.711 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:19:06.730 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "i"."Id", "i"."Amount", "i"."InvoiceDate", "i"."InvoiceNumber", "i"."PurchaseOrderNumber", "i"."Status", "i"."VendorName"
+FROM "Invoices" AS "i"
+ORDER BY "i"."InvoiceDate" DESC
+LIMIT @p1 OFFSET @p
+2026-05-21 13:19:06.733 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:19:06.735 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:19:06.739 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:19:06.766 +05:30 [INF] Executed page /Invoices/Index in 83.6541ms
+2026-05-21 13:19:06.768 +05:30 [INF] Executed endpoint '/Invoices/Index'
+2026-05-21 13:19:06.774 +05:30 [INF] HTTP GET /Invoices/Index responded 200 in 100.2716 ms
+2026-05-21 13:19:06.778 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Index - 200 null text/html; charset=utf-8 114.652ms
+2026-05-21 13:19:16.441 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/ - null null
+2026-05-21 13:19:16.453 +05:30 [INF] Executing endpoint '/Index'
+2026-05-21 13:19:16.457 +05:30 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2026-05-21 13:19:16.480 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2026-05-21 13:19:16.486 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:19:16.491 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:19:16.496 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Pending'
+2026-05-21 13:19:16.505 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Rejected'
+2026-05-21 13:19:16.510 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i")
+2026-05-21 13:19:16.514 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+2026-05-21 13:19:16.523 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i"
+    WHERE "i"."Status" = 'Approved')
+2026-05-21 13:19:16.529 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:19:16.535 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."AccessFailedCount", "a"."ConcurrencyStamp", "a"."Email", "a"."EmailConfirmed", "a"."LockoutEnabled", "a"."LockoutEnd", "a"."NormalizedEmail", "a"."NormalizedUserName", "a"."PasswordHash", "a"."PhoneNumber", "a"."PhoneNumberConfirmed", "a"."SecurityStamp", "a"."TwoFactorEnabled", "a"."UserName"
+FROM "AspNetUsers" AS "a"
+WHERE "a"."Id" = @p
+LIMIT 1
+2026-05-21 13:19:16.541 +05:30 [INF] Executed handler method OnGetAsync, returned result .
+2026-05-21 13:19:16.544 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:19:16.545 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:19:16.550 +05:30 [INF] Executed page /Index in 70.5597ms
+2026-05-21 13:19:16.556 +05:30 [INF] Executed endpoint '/Index'
+2026-05-21 13:19:16.559 +05:30 [INF] HTTP GET / responded 200 in 105.5591 ms
+2026-05-21 13:19:16.564 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/ - 200 null text/html; charset=utf-8 123.6604ms
+2026-05-21 13:19:41.597 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Analytics - null null
+2026-05-21 13:19:41.612 +05:30 [INF] Executing endpoint '/Invoices/Analytics'
+2026-05-21 13:19:41.656 +05:30 [INF] Route matched with {page = "/Invoices/Analytics"}. Executing page /Invoices/Analytics
+2026-05-21 13:19:41.664 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.AnalyticsModel.OnGet - ModelState is "Invalid"
+2026-05-21 13:19:41.671 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-05-21 13:19:41.673 +05:30 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-05-21 13:19:41.684 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "i"."Id", "i"."Amount", "i"."InvoiceDate", "i"."InvoiceNumber", "i"."PurchaseOrderNumber", "i"."Status", "i"."VendorName"
+FROM "Invoices" AS "i"
+LIMIT @p1 OFFSET @p
+2026-05-21 13:19:41.696 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:19:41.698 +05:30 [INF] Executing an implicit handler method - ModelState is "Invalid"
+2026-05-21 13:19:41.700 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:19:41.719 +05:30 [INF] Executed page /Invoices/Analytics in 57.8437ms
+2026-05-21 13:19:41.722 +05:30 [INF] Executed endpoint '/Invoices/Analytics'
+2026-05-21 13:19:41.723 +05:30 [INF] HTTP GET /Invoices/Analytics responded 200 in 111.5891 ms
+2026-05-21 13:19:41.728 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Analytics - 200 null text/html; charset=utf-8 131.5286ms
+2026-05-21 13:20:10.021 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5113/Account/Logout - application/x-www-form-urlencoded 225
+2026-05-21 13:20:10.042 +05:30 [INF] Executing endpoint '/Account/Logout'
+2026-05-21 13:20:10.070 +05:30 [INF] Route matched with {page = "/Account/Logout"}. Executing page /Account/Logout
+2026-05-21 13:20:10.085 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Account.LogoutModel.OnPostAsync - ModelState is "Valid"
+2026-05-21 13:20:10.093 +05:30 [INF] AuthenticationScheme: Identity.Application signed out.
+2026-05-21 13:20:10.097 +05:30 [INF] AuthenticationScheme: Identity.External signed out.
+2026-05-21 13:20:10.100 +05:30 [INF] AuthenticationScheme: Identity.TwoFactorUserId signed out.
+2026-05-21 13:20:10.103 +05:30 [INF] User logged out
+2026-05-21 13:20:10.105 +05:30 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.RedirectToPageResult.
+2026-05-21 13:20:10.107 +05:30 [INF] Executing RedirectToPageResult, redirecting to /Account/Login.
+2026-05-21 13:20:10.109 +05:30 [INF] Executed page /Account/Logout in 36.9309ms
+2026-05-21 13:20:10.111 +05:30 [INF] Executed endpoint '/Account/Logout'
+2026-05-21 13:20:10.113 +05:30 [INF] HTTP POST /Account/Logout responded 302 in 71.1768 ms
+2026-05-21 13:20:10.118 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5113/Account/Logout - 302 0 null 96.9304ms
+2026-05-21 13:20:10.125 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Account/Login - null null
+2026-05-21 13:20:10.130 +05:30 [INF] Executing endpoint '/Account/Login'
+2026-05-21 13:20:10.146 +05:30 [INF] Route matched with {page = "/Account/Login"}. Executing page /Account/Login
+2026-05-21 13:20:10.150 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2026-05-21 13:20:10.152 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:20:10.154 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:20:10.156 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:20:10.191 +05:30 [INF] Executed page /Account/Login in 42.2734ms
+2026-05-21 13:20:10.193 +05:30 [INF] Executed endpoint '/Account/Login'
+2026-05-21 13:20:10.194 +05:30 [INF] HTTP GET /Account/Login responded 200 in 63.8379 ms
+2026-05-21 13:20:10.198 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Account/Login - 200 null text/html; charset=utf-8 72.8209ms
+2026-05-21 13:20:13.704 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Account/Register - null null
+2026-05-21 13:20:13.710 +05:30 [INF] Executing endpoint '/Account/Register'
+2026-05-21 13:20:13.739 +05:30 [INF] Route matched with {page = "/Account/Register"}. Executing page /Account/Register
+2026-05-21 13:20:13.743 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:20:13.745 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:20:13.799 +05:30 [INF] Executed page /Account/Register in 57.4067ms
+2026-05-21 13:20:13.802 +05:30 [INF] Executed endpoint '/Account/Register'
+2026-05-21 13:20:13.804 +05:30 [INF] HTTP GET /Account/Register responded 200 in 94.2803 ms
+2026-05-21 13:20:13.807 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Account/Register - 200 null text/html; charset=utf-8 103.2684ms
+2026-05-21 13:20:26.057 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Account/Login - null null
+2026-05-21 13:20:26.072 +05:30 [INF] Executing endpoint '/Account/Login'
+2026-05-21 13:20:26.083 +05:30 [INF] Route matched with {page = "/Account/Login"}. Executing page /Account/Login
+2026-05-21 13:20:26.100 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2026-05-21 13:20:26.107 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:20:26.114 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:20:26.115 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:20:26.121 +05:30 [INF] Executed page /Account/Login in 21.3437ms
+2026-05-21 13:20:26.124 +05:30 [INF] Executed endpoint '/Account/Login'
+2026-05-21 13:20:26.130 +05:30 [INF] HTTP GET /Account/Login responded 200 in 57.5220 ms
+2026-05-21 13:20:26.147 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Account/Login - 200 null text/html; charset=utf-8 90.5257ms
+2026-05-21 13:20:46.287 +05:30 [INF] Request starting HTTP/1.1 POST http://localhost:5113/Account/Login - application/x-www-form-urlencoded 272
+2026-05-21 13:20:46.291 +05:30 [INF] Executing endpoint '/Account/Login'
+2026-05-21 13:20:46.292 +05:30 [INF] Route matched with {page = "/Account/Login"}. Executing page /Account/Login
+2026-05-21 13:20:46.328 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2026-05-21 13:20:46.357 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@normalizedUserName='?' (Size = 23)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."AccessFailedCount", "a"."ConcurrencyStamp", "a"."Email", "a"."EmailConfirmed", "a"."LockoutEnabled", "a"."LockoutEnd", "a"."NormalizedEmail", "a"."NormalizedUserName", "a"."PasswordHash", "a"."PhoneNumber", "a"."PhoneNumberConfirmed", "a"."SecurityStamp", "a"."TwoFactorEnabled", "a"."UserName"
+FROM "AspNetUsers" AS "a"
+WHERE "a"."NormalizedUserName" = @normalizedUserName
+LIMIT 1
+2026-05-21 13:20:46.505 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@user_Id='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."ClaimType", "a"."ClaimValue", "a"."UserId"
+FROM "AspNetUserClaims" AS "a"
+WHERE "a"."UserId" = @user_Id
+2026-05-21 13:20:46.538 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@userId='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a0"."Name"
+FROM "AspNetUserRoles" AS "a"
+INNER JOIN "AspNetRoles" AS "a0" ON "a"."RoleId" = "a0"."Id"
+WHERE "a"."UserId" = @userId
+2026-05-21 13:20:46.544 +05:30 [INF] AuthenticationScheme: Identity.Application signed in.
+2026-05-21 13:20:46.546 +05:30 [INF] User salonidubey97@gmail.com logged in
+2026-05-21 13:20:46.548 +05:30 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2026-05-21 13:20:46.551 +05:30 [INF] Executing LocalRedirectResult, redirecting to /.
+2026-05-21 13:20:46.553 +05:30 [INF] Executed page /Account/Login in 255.4327ms
+2026-05-21 13:20:46.556 +05:30 [INF] Executed endpoint '/Account/Login'
+2026-05-21 13:20:46.557 +05:30 [INF] HTTP POST /Account/Login responded 302 in 266.8657 ms
+2026-05-21 13:20:46.560 +05:30 [INF] Request finished HTTP/1.1 POST http://localhost:5113/Account/Login - 302 0 null 273.361ms
+2026-05-21 13:20:46.567 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/ - null null
+2026-05-21 13:20:46.572 +05:30 [INF] Executing endpoint '/Index'
+2026-05-21 13:20:46.574 +05:30 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2026-05-21 13:20:46.576 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2026-05-21 13:20:46.579 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:20:46.582 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:20:46.586 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Pending'
+2026-05-21 13:20:46.590 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Rejected'
+2026-05-21 13:20:46.594 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i")
+2026-05-21 13:20:46.598 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+2026-05-21 13:20:46.601 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i"
+    WHERE "i"."Status" = 'Approved')
+2026-05-21 13:20:46.605 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:20:46.609 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."AccessFailedCount", "a"."ConcurrencyStamp", "a"."Email", "a"."EmailConfirmed", "a"."LockoutEnabled", "a"."LockoutEnd", "a"."NormalizedEmail", "a"."NormalizedUserName", "a"."PasswordHash", "a"."PhoneNumber", "a"."PhoneNumberConfirmed", "a"."SecurityStamp", "a"."TwoFactorEnabled", "a"."UserName"
+FROM "AspNetUsers" AS "a"
+WHERE "a"."Id" = @p
+LIMIT 1
+2026-05-21 13:20:46.615 +05:30 [INF] Executed handler method OnGetAsync, returned result .
+2026-05-21 13:20:46.680 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:20:46.682 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:20:46.686 +05:30 [INF] Executed page /Index in 110.6072ms
+2026-05-21 13:20:46.690 +05:30 [INF] Executed endpoint '/Index'
+2026-05-21 13:20:46.692 +05:30 [INF] HTTP GET / responded 200 in 119.9582 ms
+2026-05-21 13:20:46.695 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/ - 200 null text/html; charset=utf-8 127.8925ms
+2026-05-21 13:21:03.139 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Index - null null
+2026-05-21 13:21:03.168 +05:30 [INF] Executing endpoint '/Invoices/Index'
+2026-05-21 13:21:03.172 +05:30 [INF] Route matched with {page = "/Invoices/Index"}. Executing page /Invoices/Index
+2026-05-21 13:21:03.186 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.IndexModel.OnGet - ModelState is "Valid"
+2026-05-21 13:21:03.190 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:21:03.196 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "i"."Id", "i"."Amount", "i"."InvoiceDate", "i"."InvoiceNumber", "i"."PurchaseOrderNumber", "i"."Status", "i"."VendorName"
+FROM "Invoices" AS "i"
+ORDER BY "i"."InvoiceDate" DESC
+LIMIT @p1 OFFSET @p
+2026-05-21 13:21:03.203 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:21:03.205 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:21:03.207 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:21:03.214 +05:30 [INF] Executed page /Invoices/Index in 29.5344ms
+2026-05-21 13:21:03.218 +05:30 [INF] Executed endpoint '/Invoices/Index'
+2026-05-21 13:21:03.221 +05:30 [INF] HTTP GET /Invoices/Index responded 200 in 52.5375 ms
+2026-05-21 13:21:03.237 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Index - 200 null text/html; charset=utf-8 98.3754ms
+2026-05-21 13:21:16.388 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Create - null null
+2026-05-21 13:21:16.406 +05:30 [INF] Executing endpoint '/Invoices/Create'
+2026-05-21 13:21:16.409 +05:30 [INF] Route matched with {page = "/Invoices/Create"}. Executing page /Invoices/Create
+2026-05-21 13:21:16.422 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.CreateModel.OnGet - ModelState is "Valid"
+2026-05-21 13:21:16.439 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:21:16.448 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:21:16.451 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:21:16.460 +05:30 [INF] Executed page /Invoices/Create in 38.1258ms
+2026-05-21 13:21:16.465 +05:30 [INF] Executed endpoint '/Invoices/Create'
+2026-05-21 13:21:16.470 +05:30 [INF] HTTP GET /Invoices/Create responded 200 in 63.7309 ms
+2026-05-21 13:21:16.485 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Create - 200 null text/html; charset=utf-8 96.0741ms
+2026-05-21 13:21:37.824 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Upload - null null
+2026-05-21 13:21:37.835 +05:30 [INF] Executing endpoint '/Invoices/Upload'
+2026-05-21 13:21:37.839 +05:30 [INF] Route matched with {page = "/Invoices/Upload"}. Executing page /Invoices/Upload
+2026-05-21 13:21:37.843 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:21:37.855 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:21:37.865 +05:30 [INF] Executed page /Invoices/Upload in 22.4656ms
+2026-05-21 13:21:37.892 +05:30 [INF] Executed endpoint '/Invoices/Upload'
+2026-05-21 13:21:37.897 +05:30 [INF] HTTP GET /Invoices/Upload responded 200 in 61.7921 ms
+2026-05-21 13:21:37.924 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Upload - 200 null text/html; charset=utf-8 97.1697ms
+2026-05-21 13:21:52.787 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Invoices/Analytics - null null
+2026-05-21 13:21:52.793 +05:30 [INF] Executing endpoint '/Invoices/Analytics'
+2026-05-21 13:21:52.805 +05:30 [INF] Route matched with {page = "/Invoices/Analytics"}. Executing page /Invoices/Analytics
+2026-05-21 13:21:52.818 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.Invoices.AnalyticsModel.OnGet - ModelState is "Invalid"
+2026-05-21 13:21:52.826 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "i"."Id", "i"."Amount", "i"."InvoiceDate", "i"."InvoiceNumber", "i"."PurchaseOrderNumber", "i"."Status", "i"."VendorName"
+FROM "Invoices" AS "i"
+LIMIT @p1 OFFSET @p
+2026-05-21 13:21:52.840 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:21:52.851 +05:30 [INF] Executing an implicit handler method - ModelState is "Invalid"
+2026-05-21 13:21:52.853 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:21:52.858 +05:30 [INF] Executed page /Invoices/Analytics in 40.772ms
+2026-05-21 13:21:52.864 +05:30 [INF] Executed endpoint '/Invoices/Analytics'
+2026-05-21 13:21:52.868 +05:30 [INF] HTTP GET /Invoices/Analytics responded 200 in 74.8419 ms
+2026-05-21 13:21:52.874 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Invoices/Analytics - 200 null text/html; charset=utf-8 87.3886ms
+2026-05-21 13:22:33.152 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Chat - null null
+2026-05-21 13:22:33.163 +05:30 [INF] Executing endpoint '/Chat'
+2026-05-21 13:22:33.167 +05:30 [INF] Route matched with {page = "/Chat"}. Executing page /Chat
+2026-05-21 13:22:33.174 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.ChatModel.OnGet - ModelState is "Valid"
+2026-05-21 13:22:33.177 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:22:33.185 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:22:33.190 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:22:33.195 +05:30 [INF] Executed page /Chat in 24.9078ms
+2026-05-21 13:22:33.213 +05:30 [INF] Executed endpoint '/Chat'
+2026-05-21 13:22:33.224 +05:30 [INF] HTTP GET /Chat responded 200 in 61.0540 ms
+2026-05-21 13:22:33.227 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Chat - 200 null text/html; charset=utf-8 75.1676ms
+2026-05-21 13:22:53.522 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Privacy - null null
+2026-05-21 13:22:53.528 +05:30 [INF] Executing endpoint '/Privacy'
+2026-05-21 13:22:53.551 +05:30 [INF] Route matched with {page = "/Privacy"}. Executing page /Privacy
+2026-05-21 13:22:53.567 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.PrivacyModel.OnGet - ModelState is "Valid"
+2026-05-21 13:22:53.582 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:22:53.590 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:22:53.596 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:22:53.615 +05:30 [INF] Executed page /Privacy in 47.9608ms
+2026-05-21 13:22:53.619 +05:30 [INF] Executed endpoint '/Privacy'
+2026-05-21 13:22:53.620 +05:30 [INF] HTTP GET /Privacy responded 200 in 92.7400 ms
+2026-05-21 13:22:53.629 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Privacy - 200 null text/html; charset=utf-8 107.452ms
+2026-05-21 13:22:55.809 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/Settings - null null
+2026-05-21 13:22:55.819 +05:30 [INF] Executing endpoint '/Settings'
+2026-05-21 13:22:55.836 +05:30 [INF] Route matched with {page = "/Settings"}. Executing page /Settings
+2026-05-21 13:22:55.840 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.SettingsModel.OnGet - ModelState is "Valid"
+2026-05-21 13:22:55.843 +05:30 [INF] Executed handler method OnGet, returned result .
+2026-05-21 13:22:55.845 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:22:55.847 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:22:55.899 +05:30 [INF] Executed page /Settings in 60.4381ms
+2026-05-21 13:22:55.901 +05:30 [INF] Executed endpoint '/Settings'
+2026-05-21 13:22:55.903 +05:30 [INF] HTTP GET /Settings responded 200 in 84.1911 ms
+2026-05-21 13:22:55.907 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/Settings - 200 null text/html; charset=utf-8 98.1421ms
+2026-05-21 13:23:06.662 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5113/ - null null
+2026-05-21 13:23:06.672 +05:30 [INF] Executing endpoint '/Index'
+2026-05-21 13:23:06.676 +05:30 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2026-05-21 13:23:06.680 +05:30 [INF] Executing handler method InvoiceProcessingWebApp.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2026-05-21 13:23:06.700 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+2026-05-21 13:23:06.711 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:23:06.721 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Pending'
+2026-05-21 13:23:06.726 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Rejected'
+2026-05-21 13:23:06.732 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i")
+2026-05-21 13:23:06.736 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+2026-05-21 13:23:06.746 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Invoices" AS "i"
+    WHERE "i"."Status" = 'Approved')
+2026-05-21 13:23:06.750 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COALESCE(ef_sum("i"."Amount"), '0.0')
+FROM "Invoices" AS "i"
+WHERE "i"."Status" = 'Approved'
+2026-05-21 13:23:06.757 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p='?' (Size = 36)], CommandType='"Text"', CommandTimeout='30']
+SELECT "a"."Id", "a"."AccessFailedCount", "a"."ConcurrencyStamp", "a"."Email", "a"."EmailConfirmed", "a"."LockoutEnabled", "a"."LockoutEnd", "a"."NormalizedEmail", "a"."NormalizedUserName", "a"."PasswordHash", "a"."PhoneNumber", "a"."PhoneNumberConfirmed", "a"."SecurityStamp", "a"."TwoFactorEnabled", "a"."UserName"
+FROM "AspNetUsers" AS "a"
+WHERE "a"."Id" = @p
+LIMIT 1
+2026-05-21 13:23:06.761 +05:30 [INF] Executed handler method OnGetAsync, returned result .
+2026-05-21 13:23:06.763 +05:30 [INF] Executing an implicit handler method - ModelState is "Valid"
+2026-05-21 13:23:06.764 +05:30 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2026-05-21 13:23:06.766 +05:30 [INF] Executed page /Index in 87.0504ms
+2026-05-21 13:23:06.769 +05:30 [INF] Executed endpoint '/Index'
+2026-05-21 13:23:06.772 +05:30 [INF] HTTP GET / responded 200 in 100.2161 ms
+2026-05-21 13:23:06.775 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5113/ - 200 null text/html; charset=utf-8 113.6753ms
+2026-05-21 13:29:59.285 +05:30 [INF] Application is shutting down...
