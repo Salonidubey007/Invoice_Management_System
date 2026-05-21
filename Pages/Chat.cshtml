@@ -1,0 +1,181 @@
+@page
+@model InvoiceProcessingWebApp.Pages.ChatModel
+@{
+    ViewData["Title"] = "Invoxa AI Assistant";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="py-4">
+    <div class="mb-4">
+        <h1 class="h2 fw-bold mb-1"><i class="fas fa-robot text-primary me-3"></i>Invoxa AI Assistant</h1>
+        <p class="text-muted">Ask questions about your invoices — amounts, vendors, statuses, and more</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <!-- Chat Window -->
+            <div class="card border-0 shadow-sm" style="height:520px; display:flex; flex-direction:column;">
+                <div class="card-header bg-primary d-flex align-items-center gap-2">
+                    <i class="fas fa-circle text-success" style="font-size:0.6rem"></i>
+                    <span class="text-white fw-bold">Invoxa AI</span>
+                    <span class="text-white-50 small ms-1">powered by Gemini + Pinecone RAG</span>
+                </div>
+                <div class="card-body p-3 overflow-auto flex-grow-1" id="chatMessages">
+                    <div class="d-flex gap-2 mb-3">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px">
+                            <i class="fas fa-robot text-white" style="font-size:0.75rem"></i>
+                        </div>
+                        <div class="bg-light rounded p-3 small" style="max-width:80%">
+                            👋 Hi! I'm Invoxa AI. I can answer questions about your invoices.<br><br>
+                            First, click <strong>Index All Invoices</strong> to load your data, then ask away!
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top p-3">
+                    <div class="input-group">
+                        <input type="text" id="questionInput" class="form-control" placeholder="Ask about your invoices..." maxlength="500" />
+                        <button class="btn btn-primary" id="sendBtn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="text-muted small mt-1">Press Enter to send · Max 500 characters</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Index Invoices -->
+            <div class="card border-0 shadow-sm mb-3">
+                <div class="card-header bg-primary">
+                    <h6 class="mb-0 text-white"><i class="fas fa-database me-2"></i>Index Invoices</h6>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small">Sync your invoice database so the AI has up-to-date data. Run this after adding or editing invoices.</p>
+                    <button class="btn btn-success w-100" onclick="indexInvoices()">
+                        <i class="fas fa-sync me-2"></i>Index All Invoices
+                    </button>
+                    <div id="indexStatus" class="mt-2 small"></div>
+                </div>
+            </div>
+
+            <!-- Sample Questions -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary">
+                    <h6 class="mb-0 text-white"><i class="fas fa-lightbulb me-2"></i>Sample Questions</h6>
+                </div>
+                <div class="card-body p-2">
+                    @foreach (var q in new[] {
+                        "How many invoices are approved?",
+                        "What is the total invoice amount?",
+                        "Which vendor has the most invoices?",
+                        "List all pending invoices",
+                        "What is the most recent invoice?"
+                    })
+                    {
+                        <button class="btn btn-outline-primary btn-sm w-100 mb-1 text-start" onclick="askSample(this.dataset.q)" data-q="@q">
+                            <i class="fas fa-chevron-right me-1"></i>@q
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    document.getElementById('questionInput').addEventListener('keypress', e => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    function appendMessage(role, text) {
+        const container = document.getElementById('chatMessages');
+        const isUser = role === 'user';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = `d-flex gap-2 mb-3${isUser ? ' flex-row-reverse' : ''}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'bg-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0';
+        avatar.style.cssText = 'width:32px;height:32px';
+        avatar.innerHTML = `<i class="fas ${isUser ? 'fa-user' : 'fa-robot'} text-white" style="font-size:0.75rem"></i>`;
+
+        const bubble = document.createElement('div');
+        bubble.className = `${isUser ? 'bg-primary text-white' : 'bg-light'} rounded p-3 small`;
+        bubble.style.cssText = 'max-width:80%;white-space:pre-wrap';
+        bubble.textContent = text; // textContent prevents XSS
+
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(bubble);
+        container.appendChild(wrapper);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function appendTyping() {
+        const container = document.getElementById('chatMessages');
+        const div = document.createElement('div');
+        div.id = 'typingIndicator';
+        div.className = 'd-flex gap-2 mb-3';
+        div.innerHTML = `
+            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px">
+                <i class="fas fa-robot text-white" style="font-size:0.75rem"></i>
+            </div>
+            <div class="bg-light rounded p-3 small"><i class="fas fa-spinner fa-spin me-1"></i>Thinking...</div>`;
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('questionInput');
+        const question = input.value.trim();
+        if (!question) return;
+
+        input.value = '';
+        appendMessage('user', question);
+        appendTyping();
+        document.getElementById('sendBtn').disabled = true;
+
+        try {
+            const res = await fetch('/Chat?handler=Ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'RequestVerificationToken': getToken() },
+                body: JSON.stringify({ question })
+            });
+            const data = await res.json();
+            document.getElementById('typingIndicator')?.remove();
+            appendMessage('bot', data.answer || 'No response received.');
+        } catch {
+            document.getElementById('typingIndicator')?.remove();
+            appendMessage('bot', 'Error connecting to AI. Please try again.');
+        }
+        document.getElementById('sendBtn').disabled = false;
+    }
+
+    async function indexInvoices() {
+        const status = document.getElementById('indexStatus');
+        status.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Indexing...';
+        try {
+            const res = await fetch('/Chat?handler=IndexInvoices', {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getToken() }
+            });
+            const data = await res.json();
+            status.textContent = data.message;
+            status.className = 'mt-2 small text-success';
+        } catch {
+            status.textContent = 'Indexing failed. Please try again.';
+            status.className = 'mt-2 small text-danger';
+        }
+    }
+
+    function askSample(q) {
+        document.getElementById('questionInput').value = q;
+        sendMessage();
+    }
+
+    function getToken() {
+        return document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+    }
+</script>
+}

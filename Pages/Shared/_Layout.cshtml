@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Invoice Pro</title>
+    <title>@ViewData["Title"] - Invoxa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -15,7 +15,7 @@
             <div class="container-xl">
                 <a class="navbar-brand fw-bold" asp-area="" asp-page="/Index">
                     <i class="fas fa-file-invoice-dollar me-2"></i>
-                    <span class="d-none d-sm-inline">Capgemini - Invoice Pro</span>
+                    <span class="d-none d-sm-inline">Invoxa — Smart Invoicing Simplified</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -62,8 +62,8 @@
                     <i class="fas fa-user-circle"></i>
                 </div>
                 <div class="user-info" id="userInfo">
-                    <span class="user-name" id="loggedUserName">Guest</span>
-                    <span class="user-role">Capgemini User</span>
+                    <span class="user-name">@(User.Identity != null && User.Identity.IsAuthenticated ? User.Identity.Name : "Guest")</span>
+                    <span class="user-role">Invoxa User</span>
                 </div>
             </div>
 
@@ -86,6 +86,9 @@
                 <a href="/Invoices/Analytics" class="sidebar-link">
                     <i class="fas fa-chart-bar"></i><span>Analytics</span>
                 </a>
+                <a href="/Chat" class="sidebar-link">
+                    <i class="fas fa-robot"></i><span>AI Assistant</span>
+                </a>
                 <a href="/Invoices/Index?handler=Export" class="sidebar-link">
                     <i class="fas fa-file-csv"></i><span>Export CSV</span>
                 </a>
@@ -94,25 +97,30 @@
                 <a href="/Privacy" class="sidebar-link">
                     <i class="fas fa-shield-alt"></i><span>Privacy</span>
                 </a>
-                <a href="#" class="sidebar-link">
+                <a href="/Settings" class="sidebar-link">
                     <i class="fas fa-cog"></i><span>Settings</span>
                 </a>
             </nav>
 
             <div class="sidebar-footer">
-                <div id="guestActions">
-                    <button class="sidebar-btn btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <div class="text-white small mb-2 px-1"><i class="fas fa-user-check me-1"></i>@User.Identity.Name</div>
+                    <form method="post" asp-page="/Account/Logout">
+                        <button type="submit" class="sidebar-btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a href="/Account/Login" class="sidebar-btn btn-login text-decoration-none">
                         <i class="fas fa-sign-in-alt"></i><span>Login</span>
-                    </button>
-                    <button class="sidebar-btn btn-signup" data-bs-toggle="modal" data-bs-target="#signupModal">
+                    </a>
+                    <a href="/Account/Register" class="sidebar-btn btn-signup text-decoration-none">
                         <i class="fas fa-user-plus"></i><span>Sign Up</span>
-                    </button>
-                </div>
-                <div id="loggedActions" style="display:none">
-                    <button class="sidebar-btn btn-logout" onclick="handleLogout()">
-                        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
-                    </button>
-                </div>
+                    </a>
+                }
             </div>
         </aside>
 
@@ -124,89 +132,7 @@
         </main>
     </div>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title"><i class="fas fa-sign-in-alt me-2"></i>Login to Capgemini Invoice Pro</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-envelope me-2 text-primary"></i>Username / Email</label>
-                        <input type="text" id="loginUsername" class="form-control" placeholder="Enter your username or email" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-lock me-2 text-primary"></i>Password</label>
-                        <div class="input-group">
-                            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" />
-                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('loginPassword')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rememberMe" />
-                            <label class="form-check-label small" for="rememberMe">Remember me</label>
-                        </div>
-                        <a href="#" class="small text-primary">Forgot password?</a>
-                    </div>
-                    <div id="loginError" class="alert alert-danger d-none">Invalid username or password.</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="handleLogin()">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Sign Up Modal -->
-    <div class="modal fade" id="signupModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title"><i class="fas fa-user-plus me-2"></i>Create Account</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-user me-2 text-success"></i>Full Name</label>
-                        <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-envelope me-2 text-success"></i>Email</label>
-                        <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-lock me-2 text-success"></i>Password</label>
-                        <div class="input-group">
-                            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" />
-                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('signupPassword')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-lock me-2 text-success"></i>Confirm Password</label>
-                        <input type="password" id="signupConfirm" class="form-control" placeholder="Confirm your password" />
-                    </div>
-                    <div id="signupError" class="alert alert-danger d-none"></div>
-                    <div id="signupSuccess" class="alert alert-success d-none">Account created! You can now login.</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success" onclick="handleSignup()">
-                        <i class="fas fa-user-plus me-2"></i>Sign Up
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -214,56 +140,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-        // Highlight active sidebar link
         document.querySelectorAll('.sidebar-link').forEach(link => {
             if (link.href === window.location.href) link.classList.add('active');
         });
-
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-
-        function handleLogin() {
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            if (!username || !password) {
-                document.getElementById('loginError').classList.remove('d-none');
-                document.getElementById('loginError').textContent = 'Please enter username and password.';
-                return;
-            }
-            // Simple frontend login simulation
-            document.getElementById('loggedUserName').textContent = username;
-            document.getElementById('guestActions').style.display = 'none';
-            document.getElementById('loggedActions').style.display = 'block';
-            document.getElementById('loginError').classList.add('d-none');
-            bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
-        }
-
-        function handleSignup() {
-            const name = document.getElementById('signupName').value.trim();
-            const email = document.getElementById('signupEmail').value.trim();
-            const password = document.getElementById('signupPassword').value.trim();
-            const confirm = document.getElementById('signupConfirm').value.trim();
-            const errEl = document.getElementById('signupError');
-            const successEl = document.getElementById('signupSuccess');
-            errEl.classList.add('d-none');
-            successEl.classList.add('d-none');
-            if (!name || !email || !password || !confirm) {
-                errEl.textContent = 'All fields are required.'; errEl.classList.remove('d-none'); return;
-            }
-            if (password !== confirm) {
-                errEl.textContent = 'Passwords do not match.'; errEl.classList.remove('d-none'); return;
-            }
-            successEl.classList.remove('d-none');
-            setTimeout(() => bootstrap.Modal.getInstance(document.getElementById('signupModal')).hide(), 1500);
-        }
-
-        function handleLogout() {
-            document.getElementById('loggedUserName').textContent = 'Guest';
-            document.getElementById('guestActions').style.display = 'block';
-            document.getElementById('loggedActions').style.display = 'none';
-        }
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

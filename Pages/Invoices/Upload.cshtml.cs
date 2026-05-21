@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace InvoiceProcessingWebApp.Pages.Invoices;
 
+[ValidateAntiForgeryToken]
 public class UploadModel : PageModel
 {
     private const long MaxFileSize = 10 * 1024 * 1024; // 10 MB

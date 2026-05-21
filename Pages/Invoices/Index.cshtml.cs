@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using InvoiceProcessingWebApp.Data;
@@ -6,6 +7,8 @@ using System.Text;
 
 namespace InvoiceProcessingWebApp.Pages.Invoices;
 
+[Authorize]
+[ValidateAntiForgeryToken]
 public class IndexModel : PageModel
 {
     private readonly AppDbContext _context;
@@ -28,16 +31,14 @@ public class IndexModel : PageModel
         TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
         if (CurrentPage > TotalPages && TotalPages > 0) CurrentPage = TotalPages;
 
-        Invoices = _context.Invoices
-            .OrderByDescending(i => i.InvoiceDate)
-            .Skip((CurrentPage - 1) * PageSize)
-            .Take(PageSize)
-            .ToList();
+        // Implement pagination for large data sets
+        var invoices = _context.Invoices.OrderByDescending(i => i.InvoiceDate).Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+        Invoices = invoices;
     }
 
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> OnPostDeleteAsync(int id)
     {
+        // Corrected to use Entity Framework's FindAsync method
         var invoice = await _context.Invoices.FindAsync(id);
         if (invoice != null)
         {

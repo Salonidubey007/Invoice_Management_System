@@ -15,8 +15,11 @@ public class ListModel : PageModel
 
     public List<Invoice> Invoices { get; set; } = new();
 
+    public new int Page { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+
     public void OnGet()
     {
-        Invoices = _context.Invoices.ToList();
+        Invoices = _context.Invoices.Skip((Page - 1) * PageSize).Take(PageSize).ToList();
     }
 }

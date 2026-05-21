@@ -1,0 +1,107 @@
+@page
+@model InvoiceProcessingWebApp.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register — Invoxa</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body { background: linear-gradient(135deg, #0066cc, #003d7a); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .register-card { border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 440px; width: 100%; }
+        .brand { font-size: 1.5rem; font-weight: 800; color: #0066cc; }
+    </style>
+</head>
+<body>
+    <div class="register-card bg-white p-5">
+        <div class="text-center mb-4">
+            <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+            <div class="brand">Invoxa</div>
+            <p class="text-muted small">Create your account</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger py-2 small">
+                <i class="fas fa-exclamation-circle me-2"></i>@Model.ErrorMessage
+                @if (Model.ErrorMessage.Contains("already exists"))
+                {
+                    <div class="mt-2">
+                        <a asp-page="/Account/Login" class="btn btn-sm btn-primary">
+                            <i class="fas fa-sign-in-alt me-1"></i>Go to Login
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small"></div>
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.FullName" class="form-label fw-semibold">Full Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user text-muted"></i></span>
+                    <input asp-for="Input.FullName" class="form-control" placeholder="Your full name" />
+                </div>
+                <span asp-validation-for="Input.FullName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label fw-semibold">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope text-muted"></i></span>
+                    <input asp-for="Input.Email" class="form-control" placeholder="you@example.com" />
+                </div>
+                <span asp-validation-for="Input.Email" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="form-label fw-semibold">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock text-muted"></i></span>
+                    <input asp-for="Input.Password" class="form-control" placeholder="Min 8 chars, 1 uppercase, 1 digit" id="pwd1" />
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePwd('pwd1','eye1')"><i class="fas fa-eye" id="eye1"></i></button>
+                </div>
+                <span asp-validation-for="Input.Password" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Input.ConfirmPassword" class="form-label fw-semibold">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock text-muted"></i></span>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Repeat password" id="pwd2" />
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePwd('pwd2','eye2')"><i class="fas fa-eye" id="eye2"></i></button>
+                </div>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 fw-bold">
+                <i class="fas fa-user-plus me-2"></i>Create Account
+            </button>
+
+            <hr class="my-4" />
+            <p class="text-center small text-muted mb-0">
+                Already have an account? <a asp-page="/Account/Login">Login</a>
+            </p>
+        </form>
+    </div>
+    <script>
+        function togglePwd(id, iconId) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById(iconId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.className = input.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

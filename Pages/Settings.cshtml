@@ -1,0 +1,133 @@
+@page
+@model InvoiceProcessingWebApp.Pages.SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="py-4">
+    <div class="mb-4">
+        <h1 class="h2 fw-bold mb-1"><i class="fas fa-cog text-primary me-3"></i>Settings</h1>
+        <p class="text-muted">Configure your Invoxa application preferences</p>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <form method="post">
+        <div class="row g-4">
+
+            <!-- General Settings -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0 text-white"><i class="fas fa-sliders-h me-2"></i>General</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label asp-for="AppName" class="form-label">Application Name</label>
+                            <input asp-for="AppName" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Currency" class="form-label">Currency</label>
+                            <select asp-for="Currency" class="form-select">
+                                <option value="USD">USD — US Dollar ($)</option>
+                                <option value="EUR">EUR — Euro (€)</option>
+                                <option value="GBP">GBP — British Pound (£)</option>
+                                <option value="INR">INR — Indian Rupee (₹)</option>
+                                <option value="JPY">JPY — Japanese Yen (¥)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="DateFormat" class="form-label">Date Format</label>
+                            <select asp-for="DateFormat" class="form-select">
+                                <option value="MMM dd, yyyy">MMM dd, yyyy (Jan 01, 2025)</option>
+                                <option value="dd/MM/yyyy">dd/MM/yyyy (01/01/2025)</option>
+                                <option value="MM/dd/yyyy">MM/dd/yyyy (01/01/2025)</option>
+                                <option value="yyyy-MM-dd">yyyy-MM-dd (2025-01-01)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Settings -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0 text-white"><i class="fas fa-desktop me-2"></i>Display</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label asp-for="PageSize" class="form-label">Invoices Per Page</label>
+                            <select asp-for="PageSize" class="form-select">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch mt-4">
+                                <input asp-for="EmailNotifications" class="form-check-input" type="checkbox" role="switch" />
+                                <label asp-for="EmailNotifications" class="form-check-label fw-semibold">Email Notifications</label>
+                                <div class="text-muted small">Receive email alerts for invoice status changes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary">
+                        <h5 class="mb-0 text-white"><i class="fas fa-info-circle me-2"></i>System Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="p-3 bg-light rounded text-center">
+                                    <div class="text-muted small">Application</div>
+                                    <div class="fw-bold">Invoxa</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 bg-light rounded text-center">
+                                    <div class="text-muted small">Version</div>
+                                    <div class="fw-bold">1.0.0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 bg-light rounded text-center">
+                                    <div class="text-muted small">Framework</div>
+                                    <div class="fw-bold">ASP.NET Core 10</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 bg-light rounded text-center">
+                                    <div class="text-muted small">Environment</div>
+                                    <div class="fw-bold">@Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4 d-flex gap-3">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>Save Settings
+            </button>
+            <a asp-page="/Index" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancel
+            </a>
+        </div>
+    </form>
+</div>

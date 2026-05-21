@@ -22,9 +22,10 @@ public class AnalyticsModel : PageModel
     public string TopVendor { get; set; } = "N/A";
     public List<MonthlyData> MonthlyTotals { get; set; } = new();
 
-    public void OnGet()
+    public void OnGet(int page = 1, int pageSize = 10)
     {
-        var invoices = _context.Invoices.ToList();
+        // Implement pagination for large data sets
+        var invoices = _context.Invoices.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         Total = invoices.Count;
         NewCount = invoices.Count(i => i.Status == "New");
         PendingCount = invoices.Count(i => i.Status == "Pending");

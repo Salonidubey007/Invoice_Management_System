@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using InvoiceProcessingWebApp.Data;
@@ -5,6 +6,8 @@ using InvoiceProcessingWebApp.Models;
 
 namespace InvoiceProcessingWebApp.Pages.Invoices;
 
+[Authorize]
+[ValidateAntiForgeryToken]
 public class CreateModel : PageModel
 {
     private readonly AppDbContext _context;
@@ -21,7 +24,6 @@ public class CreateModel : PageModel
     {
     }
 
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)

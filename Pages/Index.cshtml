@@ -1,24 +1,25 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="py-5">
-    <div class="mb-5">
-        <h1 class="display-5 fw-bold mb-3 text-dark">
-            <i class="fas fa-chart-line text-primary me-3"></i>Dashboard
-        </h1>
-        <p class="lead text-muted">Welcome to Invoice Pro - Enterprise invoice management system</p>
+<div class="py-4">
+    <div class="mb-4 d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h2 fw-bold mb-1">
+                <i class="fas fa-chart-line text-primary me-2"></i>Dashboard
+            </h1>
+            <p class="text-muted mb-0">Welcome back, <strong>@Model.WelcomeName</strong></p>
+        </div>
+        <div class="text-muted small">@DateTime.Now.ToString("dddd, MMM dd yyyy")</div>
     </div>
 
-    <!-- Statistics Row -->
+    <!-- Stats -->
     <div class="row g-4 mb-5">
         <div class="col-md-6 col-lg-3">
             <div class="stat-card">
-                <div class="stat-icon bg-primary">
-                    <i class="fas fa-file-invoice"></i>
-                </div>
+                <div class="stat-icon bg-primary"><i class="fas fa-file-invoice"></i></div>
                 <div class="stat-content">
                     <h6 class="text-muted small">Total Invoices</h6>
                     <h3 class="text-dark mb-0">@Model.TotalInvoices</h3>
@@ -27,9 +28,7 @@
         </div>
         <div class="col-md-6 col-lg-3">
             <div class="stat-card">
-                <div class="stat-icon bg-success">
-                    <i class="fas fa-check-circle"></i>
-                </div>
+                <div class="stat-icon bg-success"><i class="fas fa-check-circle"></i></div>
                 <div class="stat-content">
                     <h6 class="text-muted small">Approved</h6>
                     <h3 class="text-dark mb-0">@Model.ApprovedCount</h3>
@@ -38,9 +37,7 @@
         </div>
         <div class="col-md-6 col-lg-3">
             <div class="stat-card">
-                <div class="stat-icon bg-warning">
-                    <i class="fas fa-hourglass-half"></i>
-                </div>
+                <div class="stat-icon bg-warning"><i class="fas fa-hourglass-half"></i></div>
                 <div class="stat-content">
                     <h6 class="text-muted small">Pending</h6>
                     <h3 class="text-dark mb-0">@Model.PendingCount</h3>
@@ -49,93 +46,78 @@
         </div>
         <div class="col-md-6 col-lg-3">
             <div class="stat-card">
-                <div class="stat-icon bg-info">
-                    <i class="fas fa-dollar-sign"></i>
+                <div class="stat-icon bg-danger"><i class="fas fa-times-circle"></i></div>
+                <div class="stat-content">
+                    <h6 class="text-muted small">Rejected</h6>
+                    <h3 class="text-dark mb-0">@Model.RejectedCount</h3>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amount Stats -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="stat-card border-start border-primary border-4">
+                <div class="stat-icon bg-primary"><i class="fas fa-dollar-sign"></i></div>
                 <div class="stat-content">
                     <h6 class="text-muted small">Total Amount</h6>
-                    <h3 class="text-dark mb-0">@Model.TotalAmount.ToString("C")</h3>
+                    <h3 class="text-dark mb-0">@Model.TotalAmount.ToString("C0")</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="stat-card border-start border-success border-4">
+                <div class="stat-icon bg-success"><i class="fas fa-check-double"></i></div>
+                <div class="stat-content">
+                    <h6 class="text-muted small">Approved Amount</h6>
+                    <h3 class="text-dark mb-0">@Model.ApprovedAmount.ToString("C0")</h3>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Action Cards -->
-    <div class="row g-4">
+    <div class="row g-4 mb-5">
         <div class="col-md-6 col-lg-3">
             <a href="@Url.Page("/Invoices/Index")" class="action-card text-decoration-none">
                 <div class="action-card-icon bg-primary-light">
                     <i class="fas fa-list text-primary"></i>
                 </div>
                 <h5 class="text-dark fw-bold mt-3">View Invoices</h5>
-                <p class="text-muted small">Manage and track all invoices</p>
-                <span class="text-primary small fw-bold">View Details <i class="fas fa-arrow-right ms-2"></i></span>
+                <p class="text-muted small">Browse all invoices</p>
+                <span class="text-primary small fw-bold">View <i class="fas fa-arrow-right ms-1"></i></span>
             </a>
         </div>
-
         <div class="col-md-6 col-lg-3">
             <a href="@Url.Page("/Invoices/Create")" class="action-card text-decoration-none">
                 <div class="action-card-icon bg-success-light">
                     <i class="fas fa-plus text-success"></i>
                 </div>
                 <h5 class="text-dark fw-bold mt-3">Create Invoice</h5>
-                <p class="text-muted small">Add new invoice to system</p>
-                <span class="text-success small fw-bold">Create Now <i class="fas fa-arrow-right ms-2"></i></span>
+                <p class="text-muted small">Add a new invoice</p>
+                <span class="text-success small fw-bold">Create <i class="fas fa-arrow-right ms-1"></i></span>
             </a>
         </div>
-
         <div class="col-md-6 col-lg-3">
             <a href="@Url.Page("/Invoices/Upload")" class="action-card text-decoration-none">
                 <div class="action-card-icon bg-info-light">
                     <i class="fas fa-cloud-upload-alt text-info"></i>
                 </div>
-                <h5 class="text-dark fw-bold mt-3">Upload File</h5>
-                <p class="text-muted small">Import invoices from PDF</p>
-                <span class="text-info small fw-bold">Upload File <i class="fas fa-arrow-right ms-2"></i></span>
+                <h5 class="text-dark fw-bold mt-3">Upload PDF</h5>
+                <p class="text-muted small">Import from PDF</p>
+                <span class="text-info small fw-bold">Upload <i class="fas fa-arrow-right ms-1"></i></span>
             </a>
         </div>
-
         <div class="col-md-6 col-lg-3">
-            <a href="@Url.Page("/Privacy")" class="action-card text-decoration-none">
+            <a href="@Url.Page("/Invoices/Analytics")" class="action-card text-decoration-none">
                 <div class="action-card-icon bg-warning-light">
-                    <i class="fas fa-cog text-warning"></i>
+                    <i class="fas fa-chart-bar text-warning"></i>
                 </div>
-                <h5 class="text-dark fw-bold mt-3">Settings</h5>
-                <p class="text-muted small">Configure preferences</p>
-                <span class="text-warning small fw-bold">Configure <i class="fas fa-arrow-right ms-2"></i></span>
+                <h5 class="text-dark fw-bold mt-3">Analytics</h5>
+                <p class="text-muted small">Reports & charts</p>
+                <span class="text-warning small fw-bold">View <i class="fas fa-arrow-right ms-1"></i></span>
             </a>
-        </div>
-    </div>
-
-    <!-- Features Section -->
-    <div class="row g-4 mt-5 pt-5 border-top">
-        <div class="col-md-6">
-            <div class="feature-box">
-                <i class="fas fa-lock text-primary mb-3"></i>
-                <h5 class="fw-bold">Secure & Reliable</h5>
-                <p class="text-muted small">Enterprise-grade security with encrypted data storage</p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="feature-box">
-                <i class="fas fa-tachometer-alt text-primary mb-3"></i>
-                <h5 class="fw-bold">Lightning Fast</h5>
-                <p class="text-muted small">Optimized performance for handling thousands of invoices</p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="feature-box">
-                <i class="fas fa-mobile-alt text-primary mb-3"></i>
-                <h5 class="fw-bold">Fully Responsive</h5>
-                <p class="text-muted small">Works perfectly on desktop, tablet, and mobile devices</p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="feature-box">
-                <i class="fas fa-sync text-primary mb-3"></i>
-                <h5 class="fw-bold">Real-time Updates</h5>
-                <p class="text-muted small">Instant synchronization across all your devices</p>
-            </div>
         </div>
     </div>
 </div>

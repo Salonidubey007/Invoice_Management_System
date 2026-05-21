@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using InvoiceProcessingWebApp.Data;
@@ -5,6 +6,8 @@ using InvoiceProcessingWebApp.Models;
 
 namespace InvoiceProcessingWebApp.Pages.Invoices;
 
+[Authorize]
+[ValidateAntiForgeryToken]
 public class EditModel : PageModel
 {
     private readonly AppDbContext _context;
@@ -17,20 +20,19 @@ public class EditModel : PageModel
     [BindProperty]
     public Invoice Invoice { get; set; } = new();
 
-    public IActionResult OnGet(int id)
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        var invoice = _context.Invoices.Find(id);
+        var invoice = await _context.Invoices.FindAsync(id);
         if (invoice == null) return NotFound();
         Invoice = invoice;
         return Page();
     }
 
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid) return Page();
 
-        var existing = _context.Invoices.Find(Invoice.Id);
+        var existing = _context.Invoices.Find((int)Invoice.Id);
         if (existing == null) return NotFound();
 
         existing.InvoiceNumber = Invoice.InvoiceNumber;

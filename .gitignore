@@ -1,0 +1,24 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+## Database files
+*.db
+*.db-shm
+*.db-wal
+
+## Uploads folder contents (keep folder, ignore files)
+Uploads/*
+!Uploads/.gitkeep
+
+## Environment / secrets
+appsettings.Development.json
+appsettings.json
+*.env
+
+## OS
+.DS_Store
+Thumbs.db
